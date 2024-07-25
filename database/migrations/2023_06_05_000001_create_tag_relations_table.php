@@ -19,7 +19,11 @@ return new class extends Migration {
 
             $table->morphs('taggable');
 
-            $table->unique(['tag_id', 'taggable_type', 'taggable_id'], 'TAGGABLE_UNIQUE');
+            $table->string('collection')->nullable()->index();
+
+            $table->dateTime('created_at');
+
+            $table->unique(['tag_id', 'taggable_type', 'taggable_id', 'collection'], 'TAGGABLE_UNIQUE');
         });
     }
 
