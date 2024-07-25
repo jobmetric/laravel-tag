@@ -24,8 +24,6 @@ return new class extends Migration {
 
             $table->timestamps();
         });
-
-        cache()->forget('tag');
     }
 
     /**
@@ -36,7 +34,5 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists(config('tag.tables.tag'));
-
-        cache()->forget('tag');
     }
 };

@@ -15,11 +15,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create(config('tag.tables.tag_relation'), function (Blueprint $table) {
-            $table->foreignId(config('tag.foreign_key.tag'))->index()->constrained(config('tag.tables.tag'))->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('tag_id')->index()->constrained(config('tag.tables.tag'))->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->morphs('taggable');
 
-            $table->unique([config('tag.foreign_key.tag'), 'taggable_id', 'taggable_type'], 'TAGGABLE_UNIQUE');
+            $table->unique(['tag_id', 'taggable_type', 'taggable_id'], 'TAGGABLE_UNIQUE');
         });
     }
 
