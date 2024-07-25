@@ -17,10 +17,8 @@ return new class extends Migration {
         Schema::create(config('tag.tables.tag'), function (Blueprint $table) {
             $table->id();
 
-            $table->string('slug')->unique()->index();
-
-            $table->string('type')->nullable()->index();
-            $table->integer('ordering')->nullable()->index();
+            $table->string('type')->index();
+            $table->integer('ordering')->default(0)->index();
 
             $table->timestamps();
         });
