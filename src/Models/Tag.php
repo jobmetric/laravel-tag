@@ -10,6 +10,10 @@ use JobMetric\Comment\HasComment;
 use JobMetric\Layout\Contracts\LayoutContract;
 use JobMetric\Layout\HasLayout;
 use JobMetric\Like\HasLike;
+use JobMetric\Media\Contracts\MediaContract;
+use JobMetric\Media\HasFile;
+use JobMetric\Membership\Contracts\MemberContract;
+use JobMetric\Membership\HasMember;
 use JobMetric\Metadata\Contracts\MetaContract;
 use JobMetric\Metadata\HasMeta;
 use JobMetric\Metadata\Metaable;
@@ -22,13 +26,15 @@ use JobMetric\Url\Urlable;
  * @property mixed type
  * @property mixed ordering
  */
-class Tag extends Model implements TranslationContract, MetaContract, CommentContract, LayoutContract
+class Tag extends Model implements TranslationContract, MetaContract, MediaContract, CommentContract, MemberContract, LayoutContract
 {
     use HasFactory,
         HasTranslation,
         HasMeta,
         Metaable,
+        HasFile,
         HasComment,
+        HasMember,
         HasLike,
         HasStar,
         HasLayout,
@@ -57,7 +63,31 @@ class Tag extends Model implements TranslationContract, MetaContract, CommentCon
     public function translationAllowFields(): array
     {
         return [
-            'name'
+            'name',
+            'description',
+            'meta_title',
+            'meta_description',
+            'meta_keywords'
+        ];
+    }
+
+    /**
+     * media allow collections.
+     *
+     * @return array
+     */
+    public function mediaAllowCollections(): array
+    {
+        return [
+            'base' => [
+                'media_collection' => 'public',
+                'size' => [
+                    'default' => [
+                        'w' => config('tag.default_image_size.width'),
+                        'h' => config('tag.default_image_size.height'),
+                    ]
+                ]
+            ],
         ];
     }
 
@@ -69,6 +99,18 @@ class Tag extends Model implements TranslationContract, MetaContract, CommentCon
     public function needsCommentApproval(): bool
     {
         return true;
+    }
+
+    /**
+     * allow the member collection.
+     *
+     * @return array
+     */
+    public function allowMemberCollection(): array
+    {
+        return [
+            'owner' => 'single',
+        ];
     }
 
     /**
