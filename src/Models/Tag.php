@@ -5,6 +5,7 @@ namespace JobMetric\Tag\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use JobMetric\Comment\Contracts\CommentContract;
 use JobMetric\Comment\HasComment;
@@ -18,19 +19,22 @@ use JobMetric\Membership\HasMember;
 use JobMetric\Metadata\Contracts\MetaContract;
 use JobMetric\Metadata\HasMeta;
 use JobMetric\Metadata\Metaable;
+use JobMetric\PackageCore\Models\HasBooleanStatus;
 use JobMetric\Star\HasStar;
 use JobMetric\Translation\Contracts\TranslationContract;
 use JobMetric\Translation\HasTranslation;
 use JobMetric\Url\Urlable;
 
 /**
- * @property mixed type
- * @property mixed ordering
+ * @property string type
+ * @property int ordering
+ * @property bool status
  */
 class Tag extends Model implements TranslationContract, MetaContract, MediaContract, CommentContract, MemberContract, LayoutContract
 {
     use HasFactory,
         SoftDeletes,
+        HasBooleanStatus,
         HasTranslation,
         HasMeta,
         Metaable,
@@ -44,7 +48,8 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
 
     protected $fillable = [
         'type',
-        'ordering'
+        'ordering',
+        'status',
     ];
 
     /**
@@ -54,7 +59,8 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
      */
     protected $casts = [
         'type' => 'string',
-        'ordering' => 'integer'
+        'ordering' => 'integer',
+        'status' => 'boolean',
     ];
 
     public function getTable()
@@ -133,6 +139,11 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
     public function layoutCollectionField(): ?string
     {
         return null;
+    }
+
+    public function tagRelations(): HasMany
+    {
+        return $this->hasMany(TagRelation::class, 'tag_id', 'id');
     }
 
     /**
