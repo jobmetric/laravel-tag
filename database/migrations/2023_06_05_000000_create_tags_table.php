@@ -19,6 +19,7 @@ return new class extends Migration {
 
             $table->string('type')->index();
             $table->integer('ordering')->default(0)->index();
+            $table->boolean('status')->default(true)->index();
 
             $table->softDeletes();
             $table->timestamps();
