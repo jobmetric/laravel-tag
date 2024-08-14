@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('type')->index();
             $table->integer('ordering')->default(0)->index();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

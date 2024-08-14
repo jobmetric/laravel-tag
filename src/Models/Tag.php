@@ -5,6 +5,7 @@ namespace JobMetric\Tag\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use JobMetric\Comment\Contracts\CommentContract;
 use JobMetric\Comment\HasComment;
 use JobMetric\Layout\Contracts\LayoutContract;
@@ -29,6 +30,7 @@ use JobMetric\Url\Urlable;
 class Tag extends Model implements TranslationContract, MetaContract, MediaContract, CommentContract, MemberContract, LayoutContract
 {
     use HasFactory,
+        SoftDeletes,
         HasTranslation,
         HasMeta,
         Metaable,
@@ -134,13 +136,14 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
     }
 
     /**
-     * scope type
+     * Scope a query to only include categories of a given type.
      *
      * @param Builder $query
      * @param string $type
+     *
      * @return Builder
      */
-    public function scopeType(Builder $query, string $type): Builder
+    public function scopeOfType(Builder $query, string $type): Builder
     {
         return $query->where('type', $type)->orderBy('ordering');
     }
