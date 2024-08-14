@@ -2,18 +2,22 @@
 
 namespace JobMetric\Tag\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use JobMetric\Tag\Events\TaggableResourceEvent;
 
 /**
  * @property mixed tag_id
  * @property mixed taggable_type
  * @property mixed taggable_id
+ * @property mixed collection
  *
  * @property Tag tag
  * @property mixed taggable
+ * @property mixed taggable_resource
  */
 class TagRelation extends Pivot
 {
@@ -24,7 +28,8 @@ class TagRelation extends Pivot
     protected $fillable = [
         'tag_id',
         'taggable_type',
-        'taggable_id'
+        'taggable_id',
+        'collection'
     ];
 
     /**
@@ -35,7 +40,8 @@ class TagRelation extends Pivot
     protected $casts = [
         'tag_id' => 'integer',
         'taggable_type' => 'string',
-        'taggable_id' => 'integer'
+        'taggable_id' => 'integer',
+        'collection' => 'string'
     ];
 
     public function getTable()
@@ -61,5 +67,29 @@ class TagRelation extends Pivot
     public function taggable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Scope a query to only include categories of a given collection.
+     *
+     * @param Builder $query
+     * @param string $collection
+     *
+     * @return Builder
+     */
+    public function scopeOfCollection(Builder $query, string $collection): Builder
+    {
+        return $query->where('collection', $collection);
+    }
+
+    /**
+     * Get the taggable resource attribute.
+     */
+    public function getTaggableResourceAttribute()
+    {
+        $event = new TaggableResourceEvent($this->taggable);
+        event($event);
+
+        return $event->resource;
     }
 }
