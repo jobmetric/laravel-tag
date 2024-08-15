@@ -21,7 +21,8 @@ return [
         "created" => "Tag created successfully.",
         "updated" => "Tag updated successfully.",
         "deleted" => "Tag deleted successfully.",
-        "change_default_value" => "Default value changed successfully.",
+        "restored" => "Tag restored successfully.",
+        "permanently_deleted" => "Tag permanently deleted successfully.",
         "used_in" => "Tag used in ':count' places.",
         "attached" => "Tag attached successfully.",
         "detached" => "Tag detached successfully.",
@@ -30,6 +31,7 @@ return [
     "exceptions" => [
         "model_tag_contract_not_found" => "Model ':model' not implements 'JobMetric\Tag\Contracts\TagContract' interface!",
         "tag_not_found" => "Tag ':number' not found!",
+        "tag_type_used_in" => "Tag number ':tag_id' used in ':number' places!",
     ],
 
     "tag_type" => [
