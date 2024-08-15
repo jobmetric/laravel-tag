@@ -131,7 +131,7 @@ class Tag
      */
     public function get(int $tag_id, array $with = [], string $locale = null): array
     {
-        $query = TagModel::query()
+        $query = TagModel::withTrashed()
             ->where('id', $tag_id);
 
         if (!empty($with)) {
