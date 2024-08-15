@@ -32,6 +32,8 @@ return [
         "model_tag_contract_not_found" => "Model ':model' not implements 'JobMetric\Tag\Contracts\TagContract' interface!",
         "tag_not_found" => "Tag ':number' not found!",
         "tag_type_used_in" => "Tag number ':tag_id' used in ':number' places!",
+        "tag_collection_not_in_tag_allow_types" => "Tag collection ':collection' not in tag allow types!",
+        "invalid_tag_type" => "Invalid tag type ':type'!",
     ],
 
     "tag_type" => [
