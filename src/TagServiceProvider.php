@@ -5,6 +5,7 @@ namespace JobMetric\Tag;
 use JobMetric\PackageCore\Exceptions\MigrationFolderNotFoundException;
 use JobMetric\PackageCore\PackageCore;
 use JobMetric\PackageCore\PackageCoreServiceProvider;
+use JobMetric\Tag\Events\TagTypeEvent;
 
 class TagServiceProvider extends PackageCoreServiceProvider
 {
@@ -20,5 +21,22 @@ class TagServiceProvider extends PackageCoreServiceProvider
             ->hasConfig()
             ->hasMigration()
             ->hasTranslation();
+    }
+
+    /**
+     * After register package
+     *
+     * @return void
+     */
+    public function afterRegisterPackage(): void
+    {
+        $this->app->singleton('tagType', function () {
+            $defaultTagType = config('tag.default_tag_type');
+
+            $event = new TagTypeEvent($defaultTagType);
+            event($event);
+
+            return $event->tagType;
+        });
     }
 }
