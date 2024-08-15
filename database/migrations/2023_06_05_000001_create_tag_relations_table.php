@@ -4,6 +4,7 @@ namespace JobMetric\Tag\Database\Migrations;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -21,7 +22,7 @@ return new class extends Migration {
 
             $table->string('collection')->nullable()->index();
 
-            $table->dateTime('created_at');
+            $table->dateTime('created_at')->index()->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->unique(['tag_id', 'taggable_type', 'taggable_id', 'collection'], 'TAGGABLE_UNIQUE');
         });
