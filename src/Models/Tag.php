@@ -29,6 +29,7 @@ use JobMetric\Url\Urlable;
  * @property string type
  * @property int ordering
  * @property bool status
+ * @method static find(int $tag_id)
  */
 class Tag extends Model implements TranslationContract, MetaContract, MediaContract, CommentContract, MemberContract, LayoutContract
 {
