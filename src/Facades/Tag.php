@@ -5,6 +5,7 @@ namespace JobMetric\Tag\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model getObject(int $tag_id)
  * @method static \Spatie\QueryBuilder\QueryBuilder query(array $filter = [], array $with = [], string $mode = null)
  * @method static \Illuminate\Http\Resources\Json\AnonymousResourceCollection paginate(array $filter = [], int $page_limit = 15, array $with = [], string $mode = null)
  * @method static \Illuminate\Http\Resources\Json\AnonymousResourceCollection all(array $filter = [], array $with = [], string $mode = null)

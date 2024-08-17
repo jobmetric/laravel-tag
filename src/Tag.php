@@ -3,6 +3,8 @@
 namespace JobMetric\Tag;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -41,6 +43,25 @@ class Tag
     public function __construct(Application $app)
     {
         $this->app = $app;
+    }
+
+    /**
+     * Get the object tag.
+     *
+     * @param int $tag_id
+     *
+     * @return Builder|Model
+     * @throws Throwable
+     */
+    public function getObject(int $tag_id): Builder|Model
+    {
+        $tag = TagModel::withTrashed()->where('id', $tag_id)->first();
+
+        if (!$tag) {
+            throw new TagNotFoundException($tag_id);
+        }
+
+        return $tag;
     }
 
     /**
