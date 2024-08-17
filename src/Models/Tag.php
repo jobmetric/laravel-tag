@@ -21,6 +21,8 @@ use JobMetric\Metadata\HasMeta;
 use JobMetric\Metadata\Metaable;
 use JobMetric\PackageCore\Models\HasBooleanStatus;
 use JobMetric\Star\HasStar;
+use JobMetric\Tag\Events\TagAllowMemberCollectionEvent;
+use JobMetric\Tag\Events\TagMediaAllowCollectionEvent;
 use JobMetric\Translation\Contracts\TranslationContract;
 use JobMetric\Translation\HasTranslation;
 use JobMetric\Url\Urlable;
@@ -87,7 +89,7 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
      */
     public function mediaAllowCollections(): array
     {
-        return [
+        $event = new TagMediaAllowCollectionEvent([
             'base' => [
                 'media_collection' => 'public',
                 'size' => [
@@ -97,7 +99,11 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
                     ]
                 ]
             ],
-        ];
+        ]);
+
+        event($event);
+
+        return $event->mediaAllowCollection;
     }
 
     /**
@@ -117,9 +123,13 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
      */
     public function allowMemberCollection(): array
     {
-        return [
+        $event = new TagAllowMemberCollectionEvent([
             'owner' => 'single',
-        ];
+        ]);
+
+        event($event);
+
+        return $event->allowMemberCollection;
     }
 
     /**
