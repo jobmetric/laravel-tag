@@ -25,7 +25,7 @@ use JobMetric\Tag\Events\TagAllowMemberCollectionEvent;
 use JobMetric\Tag\Events\TagMediaAllowCollectionEvent;
 use JobMetric\Translation\Contracts\TranslationContract;
 use JobMetric\Translation\HasTranslation;
-use JobMetric\Url\Urlable;
+use JobMetric\Url\HasUrl;
 
 /**
  * @property string type
@@ -47,7 +47,7 @@ class Tag extends Model implements TranslationContract, MetaContract, MediaContr
         HasLike,
         HasStar,
         HasLayout,
-        Urlable;
+        HasUrl;
 
     protected $fillable = [
         'type',
