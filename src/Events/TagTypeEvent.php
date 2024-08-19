@@ -5,21 +5,11 @@ namespace JobMetric\Tag\Events;
 class TagTypeEvent
 {
     /**
-     * The tay type to be filled by the listener.
+     * The tag type to be filled by the listener.
      *
      * @var array
      */
-    public array $tagType;
-
-    /**
-     * Create a new event instance.
-     *
-     * @param array $defaultTagType
-     */
-    public function __construct(array $defaultTagType)
-    {
-        $this->tagType = $defaultTagType;
-    }
+    public array $tagType = [];
 
     /**
      * Add a type.

@@ -36,9 +36,4 @@ return [
         "invalid_tag_type" => "Invalid tag type ':type'!",
     ],
 
-    "tag_type" => [
-        "product" => "Product",
-        "post" => "Post"
-    ],
-
 ];

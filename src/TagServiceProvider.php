@@ -31,9 +31,7 @@ class TagServiceProvider extends PackageCoreServiceProvider
     public function afterRegisterPackage(): void
     {
         $this->app->singleton('tagType', function () {
-            $defaultTagType = config('tag.default_tag_type');
-
-            $event = new TagTypeEvent($defaultTagType);
+            $event = new TagTypeEvent;
             event($event);
 
             return $event->tagType;
