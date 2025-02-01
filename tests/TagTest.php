@@ -44,7 +44,7 @@ class TagTest extends BaseTag
 
         $this->assertIsArray($tag);
         $this->assertFalse($tag['ok']);
-        $this->assertEquals($tag['message'], trans('tag::base.validation.errors'));
+        $this->assertEquals($tag['message'], trans('package-core::base.validation.errors'));
         $this->assertEquals(422, $tag['status']);
     }
 
